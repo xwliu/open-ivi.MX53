@@ -1,0 +1,70 @@
+display_seekbar(1);
+
+ui_print("-->Project tractor Image Burning<--");
+ui_print("-->writting u-boot...");
+# clean uboot and it env 
+package_extract_file("bin/zero.bin", "/tmp/zero.bin");
+simple_dd("/tmp/zero.bin", "/dev/block/mmcblk0", 1024);
+
+# burn actually uboot
+package_extract_file("bin/u-boot-no-padding.bin", "/tmp/u-boot-no-padding.bin");
+simple_dd("/tmp/u-boot-no-padding.bin", "/dev/block/mmcblk0", 1024);
+ui_print("-->uboot Done");
+display_seekbar(2);
+
+ui_print("-->extract kernel image...");
+package_extract_file("bin/uImage", "/tmp/uImage");
+simple_dd("/tmp/uImage", "/dev/block/mmcblk0", 1048576);
+ui_print("-->kernel Done");
+
+ui_print("-->extract uramdisk image...");
+package_extract_file("bin/uramdisk.img", "/tmp/uramdisk.img");
+simple_dd("/tmp/uramdisk.img", "/dev/block/mmcblk0", 6291456);
+ui_print("-->uramdisk Done");
+display_seekbar(3);
+
+ui_print("-->extract logo...");
+package_extract_file("bin/logo.bin", "/tmp/logo.bin");
+simple_dd("/tmp/logo.bin", "/dev/block/mmcblk0", 10485760);
+ui_print("-->logo Done");
+
+ui_print("-->extract logo_kernel...");
+package_extract_file("bin/logo_k.bin", "/tmp/logo_k.bin");
+simple_dd("/tmp/logo_k.bin", "/dev/block/mmcblk0", 13631488);
+ui_print("-->logo_kernel Done");
+display_seekbar(4);
+
+ui_print("-->extract system.img...");
+package_extract_file("bin/system.img", "/tmp/system.img");
+ui_print("-->upgrading system partition...\n");
+simple_dd("/tmp/system.img", "/dev/block/mmcblk0p1", 0);
+ui_print("-->system.img Done");
+display_seekbar(5);
+
+#ui_print("-->extract recovery.img...");
+#package_extract_file("bin/recovery.img", "/tmp/recovery.img");
+#ui_print("-->upgrading recovery partition...\n");
+#simple_dd("/tmp/recovery.img", "/dev/block/mmcblk0p5", 0);
+#ui_print("-->recovery.img Done");
+#display_seekbar(6);
+
+ui_print("-->formating user data");
+format("ext4", "mmc", "/dev/block/mmcblk0p2");
+display_seekbar(6);
+
+ui_print("-->Copying apk...\n");
+mount("ext4", "mmc", "/dev/block/mmcblk0p2", "/data");
+package_extract_dir("data", "/data");
+set_perm_recursive(1000, 1000, 0755, 0755, "/data/app");
+display_seekbar(7);
+
+ui_print("-->backup apk...\n");
+#format("ext4", "mmc", "/dev/block/mmcblk0p6");
+mount("ext4", "mmc", "/dev/block/mmcblk0p6", "/firmware");
+package_extract_dir("data", "/firmware");
+set_perm_recursive(1000, 1000, 0755, 0755, "/firmware/app");
+
+#ui_print("-->extract recovery.img...");
+#package_extract_file("bin/recovery.img", "/firmware/recovery.img");
+display_seekbar(8);
+
