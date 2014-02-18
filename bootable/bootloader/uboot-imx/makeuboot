@@ -1,0 +1,12 @@
+#!/bin/sh
+echo "Arm Tool -> Ver4.4.0"
+
+# define our root dir
+
+export CROSS_COMPILE=${TRACTOR_SRC_ROOT}/prebuilt/linux-x86/toolchain/arm-eabi-4.4.0/bin/arm-eabi-
+#cd ${TRACTOR_SRC_ROOT}/bootable/bootloader/uboot-imx/
+#make mx53_tractor_android_config
+make
+#dd if=${TRACTOR_SRC_ROOT}/bootable/bootloader/uboot-imx/u-boot.bin of=${TRACTOR_SRC_ROOT}/bootable/bootloader/uboot-imx/u-boot-no-padding.bin bs=1024 skip=1; sync
+dd if=u-boot.bin of=u-boot-no-padding.bin bs=1024 skip=1; sync
+echo "Tractor UBoot Build Done"
