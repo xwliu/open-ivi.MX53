@@ -1,0 +1,6 @@
+ # system.prop for 
+  # This overrides settings in the products/generic/system.prop file
+  #
+persist.sys.timezone=Asia/Shanghai
+ro.product.btname=CARKIT
+

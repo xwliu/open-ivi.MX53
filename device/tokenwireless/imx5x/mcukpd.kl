@@ -1,0 +1,45 @@
+key 102   HOME
+key 139   MENU
+key 158   BACK
+key 115   VOLUME_UP       
+key 114   VOLUME_DOWN
+key 116   POWER             WAKE
+key 28    ENTER
+key 108   DPAD_DOWN     
+key 103   DPAD_UP
+key 105   DPAD_LEFT
+key 106   DPAD_RIGHT
+key 113   MUTE
+
+key 59    F1
+key 60    F2
+key 61    F3
+key 62    F4
+key 63    F5
+key 64    F6
+key 65    F7
+key 66    F8
+key 67    F9
+key 68    F10 
+key 87    F11
+key 88    F12
+key 148   PROG1
+key 149   PROG2
+key 164   PLAYPAUSE
+key 172   HOMEPAGE
+key 177   SCROLLUP
+key 178   SCROLLDOWN
+key 183   F13
+key 184   F14
+key 185   F15
+key 186   F16
+key 187   F17
+key 188   F18
+key 189   F19
+key 190   F20
+key 191   F21
+key 192   F22
+key 193   F23
+key 194   F24
+
+

@@ -1,0 +1,59 @@
+on boot
+
+    # Set permission for IIM node
+    symlink /dev/mxc_iim /dev/mxc_mem
+
+    # 3D acceleration property
+    setprop debug.sf.showfps    0
+    setprop debug.sf.enable_hgl 1
+    setprop debug.egl.hw        1
+
+    # fsl omx graphic manager media framework property
+    setprop media.omxgm.enable-player 1
+	setprop media.omxgm.enable-record 0
+    setprop media.omxgm.enable-scan 1
+
+    # set video render type
+    setprop rw.VIDEO_RENDER_NAME video_render.overlay
+
+    #Define the config for dual camera
+    setprop back_camera_name uvc
+    setprop back_camera_orient 180
+
+    # Set OpenGLES version
+    setprop ro.opengles.version 131072
+
+    # Disable UI output for second display during video playback
+    setprop rw.secfb.disable-overlay  1
+
+    # Enable auto configuration with 1, disable with 0
+    setprop rw.AUTO_CONFIG_DISPLAY  1
+
+    # Video output choices for dual display
+    # Video on secondary display
+    setprop rw.SIN_VIDEO_DUAL_UI 0
+    # UI on primary display
+    #(seconday display no more than 720P for imx53)
+    setprop rw.DUAL_VIDEO_SIN_UI 1
+    # Unsupported
+    #setprop rw.DUAL_VIDEO_DUAL_UI 0
+
+	setprop media.audio.mute 0
+	
+on fs
+# mount ext4 partitions
+    mount ext4 /dev/block/mmcblk0p1 /system
+    mount ext4 /dev/block/mmcblk0p1 /system ro remount
+    mount ext4 /dev/block/mmcblk0p2 /data nosuid nodev nodelalloc
+    mount ext4 /dev/block/mmcblk0p3 /cache nosuid nodev
+    mount ext4 /dev/block/mmcblk0p6 /firmware nosuid nodev nodelalloc
+
+
+
+# Permissions for System Calibrator.
+    chmod 0666 /sys/module/mxc_ts/parameters/calibration
+	chmod 0666 /dev/input/event0
+	chmod 0666 /dev/input/event1
+
+# Permissions for System CarStatus.
+	chmod 0666 /dev/carstatus
